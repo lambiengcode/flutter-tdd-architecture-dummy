@@ -5,13 +5,13 @@ import 'package:flutter_tdd_architecture/src/core/usecases/usecase.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/repositories/authentication_repository.dart';
 
-class Register implements UseCase<User, Params> {
+class Register implements UseCase<User, ParamsRegister> {
   final AuthenticationRepository repository;
 
   Register({required this.repository});
 
   @override
-  Future<Either<Failure, User>> call(Params params) async {
+  Future<Either<Failure, User>> call(ParamsRegister params) async {
     return await repository.register(
       username: params.username,
       password: params.password,
@@ -20,12 +20,12 @@ class Register implements UseCase<User, Params> {
   }
 }
 
-class Params extends Equatable {
+class ParamsRegister extends Equatable {
   final String username;
   final String password;
   final String fullName;
 
-  Params({
+  ParamsRegister({
     required this.username,
     required this.password,
     required this.fullName,

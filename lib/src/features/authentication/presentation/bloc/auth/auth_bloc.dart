@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_tdd_architecture/src/core/error/failures.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/login.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/register.dart';
@@ -26,19 +28,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (event is LoginEvent) {
       yield Authenticating();
-      await _login();
-      yield AuthenticationSuccess(
-        userModel: user,
-      );
+      yield* _login();
     }
   }
 
-  Future<void> _login() async {
-    user = User(
-      id: '1234',
-      username: 'lambiengcode',
-      fullName: 'Dao Hong Vinh',
-      age: 18,
+  Stream<AuthState> _login() async* {
+    Either<Failure, User?> userResponse = await loginUsecase.call(
+      ParamsLogin(username: '', password: ''),
+    );
+    yield userResponse.fold(
+      (failure) => AuthenticationFail(),
+      (user) => AuthenticationSuccess(userModel: user),
     );
   }
 }

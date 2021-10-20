@@ -5,7 +5,12 @@ class AuthenticationRemoteData {
     required String username,
     required String password,
   }) async {
-    return null;
+    return User(
+      id: '1',
+      username: 'lambiengcode',
+      fullName: 'Dao Hong Vinh',
+      age: 21,
+    );
   }
 
   Future<User?> register({
@@ -13,6 +18,11 @@ class AuthenticationRemoteData {
     required String password,
     required String fullName,
   }) async {
-    return null;
+    return User(
+      id: '2',
+      username: 'lambiengcode',
+      fullName: 'Dao Hong Vinh',
+      age: 18,
+    );
   }
 }

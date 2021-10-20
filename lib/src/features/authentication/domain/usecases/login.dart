@@ -5,22 +5,22 @@ import 'package:flutter_tdd_architecture/src/core/usecases/usecase.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/repositories/authentication_repository.dart';
 
-class Login implements UseCase<User, Params> {
+class Login implements UseCase<User, ParamsLogin> {
   final AuthenticationRepository repository;
 
   Login({required this.repository});
 
   @override
-  Future<Either<Failure, User>> call(Params params) async {
+  Future<Either<Failure, User>> call(ParamsLogin params) async {
     return await repository.login(username: params.username, password: params.password);
   }
 }
 
-class Params extends Equatable {
+class ParamsLogin extends Equatable {
   final String username;
   final String password;
 
-  Params({required this.username, required this.password});
+  ParamsLogin({required this.username, required this.password});
 
   @override
   List<Object> get props => [username, password];
