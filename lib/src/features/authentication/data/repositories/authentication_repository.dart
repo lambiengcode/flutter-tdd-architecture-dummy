@@ -19,6 +19,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   });
 
   @override
+  Future<Either<Failure, User?>> getUserLocalData() {
+    return _getUserLocalData();
+  }
+
+  @override
   Future<Either<Failure, User>> register({
     required String username,
     required String password,
@@ -52,6 +57,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           password: password,
         );
         if (remoteDataResponse != null) {
+          localData.saveUserModel(remoteDataResponse);
           return Right(remoteDataResponse);
         } else {
           return Left(ServerFailure());
@@ -62,5 +68,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } else {
       return Left(ServerFailure());
     }
+  }
+
+  Future<Either<Failure, User?>> _getUserLocalData() async {
+    final localDataResponse = localData.getUserModel();
+    return Right(localDataResponse);
   }
 }

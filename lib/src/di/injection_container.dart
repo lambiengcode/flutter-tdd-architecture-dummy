@@ -3,6 +3,7 @@ import 'package:flutter_tdd_architecture/src/features/authentication/data/dataso
 import 'package:flutter_tdd_architecture/src/features/authentication/data/datasources/authentication_local_data.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/data/repositories/authentication_repository.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/repositories/authentication_repository.dart';
+import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/get_user_local_data.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/login.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/register.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/presentation/bloc/auth/auth_bloc.dart';
@@ -16,12 +17,14 @@ Future<void> init() async {
     () => AuthBloc(
       loginUsecase: sl(),
       registerUsecase: sl(),
+      getUserLocalData: sl(),
     ),
   );
 
   // Register Usecases
   sl.registerLazySingleton(() => Login(repository: sl()));
   sl.registerLazySingleton(() => Register(repository: sl()));
+  sl.registerLazySingleton(() => GetUserLocalData(repository: sl()));
 
   // Register Repository
   sl.registerLazySingleton<AuthenticationRepository>(

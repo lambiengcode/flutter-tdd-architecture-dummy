@@ -12,4 +12,5 @@ abstract class AuthenticationRepository {
     required String password,
     required String fullName,
   });
+  Future<Either<Failure, User?>> getUserLocalData();
 }

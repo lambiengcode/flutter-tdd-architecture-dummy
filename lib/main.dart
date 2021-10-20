@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tdd_architecture/src/app.dart';
 import 'package:flutter_tdd_architecture/src/core/util/logger.dart';
 import 'package:flutter_tdd_architecture/src/di/injection_container.dart' as di;
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   await di.init();
   Bloc.observer = AppBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

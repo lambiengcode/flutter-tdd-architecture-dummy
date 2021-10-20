@@ -1,18 +1,34 @@
+import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 import 'package:get_storage/get_storage.dart';
 
 class AuthenticationLocalData {
   final _getStorage = GetStorage();
-  final storageKey = 'token';
+  final storageKeyToken = 'token';
+  final storageKeyUser = 'user';
 
   String getAccessToken() {
-    return _getStorage.read(storageKey) ?? '';
+    return _getStorage.read(storageKeyToken) ?? '';
+  }
+
+  User? getUserModel() {
+    print(_getStorage.read(storageKeyUser));
+    return _getStorage.read(storageKeyUser) == null
+        ? null
+        : User.fromMap(
+            _getStorage.read(storageKeyUser),
+          );
   }
 
   void saveAccessToken(String token) async {
-    _getStorage.write(storageKey, token);
+    _getStorage.write(storageKeyToken, token);
+  }
+
+  void saveUserModel(User userModel) async {
+    print(userModel.toString());
+    _getStorage.write(storageKeyUser, userModel.toMap());
   }
 
   void clearAccessToken() async {
-    _getStorage.remove(storageKey);
+    _getStorage.remove(storageKeyToken);
   }
 }
