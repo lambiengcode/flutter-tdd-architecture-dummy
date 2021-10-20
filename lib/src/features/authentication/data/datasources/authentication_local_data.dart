@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
-class UserLocalData {
+class AuthenticationLocalData {
   final _getStorage = GetStorage();
   final storageKey = 'token';
 

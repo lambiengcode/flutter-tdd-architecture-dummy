@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tdd_architecture/src/app.dart';
 import 'package:flutter_tdd_architecture/src/core/util/logger.dart';
+import 'package:flutter_tdd_architecture/src/di/injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await di.init();
   Bloc.observer = AppBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

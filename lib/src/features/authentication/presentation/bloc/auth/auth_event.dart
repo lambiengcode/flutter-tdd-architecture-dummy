@@ -9,10 +9,10 @@ abstract class AuthEvent extends Equatable {
 
 class OnAuthCheck extends AuthEvent {}
 
-class OnClear extends AuthEvent {}
+class OnClearEvent extends AuthEvent {}
 
-class Login extends AuthEvent {}
+class LoginEvent extends AuthEvent {}
 
-class Register extends AuthEvent {}
+class RegisterEvent extends AuthEvent {}
 
-class LogOut extends AuthEvent {}
+class LogOutEvent extends AuthEvent {}

@@ -8,7 +8,7 @@ import 'package:flutter_tdd_architecture/src/features/authentication/domain/enti
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/repositories/authentication_repository.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final UserLocalData localData;
+  final AuthenticationLocalData localData;
   final AuthenticationRemoteData remoteData;
   final NetworkInfo networkInfo;
 

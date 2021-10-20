@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tdd_architecture/src/common/app_decoration.dart';
 import 'package:flutter_tdd_architecture/src/common/color.dart';
-import 'package:flutter_tdd_architecture/src/common/constants.dart';
+import 'package:flutter_tdd_architecture/src/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   FocusNode usernameFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                    padding: EdgeInsets.only(bottom: 0),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                               10.w,
                               12.sp,
                             ),
-                            child: Constants().splashLottie,
+                            child: Container(),
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(
@@ -130,7 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 SizedBox(height: 6.sp),
                                 GestureDetector(
-                                  onTap: () async {},
+                                  onTap: () async {
+                                    BlocProvider.of<AuthBloc>(context).add(LoginEvent());
+                                  },
                                   child: Container(
                                     height: 40.sp,
                                     margin: EdgeInsets.symmetric(horizontal: 16.sp),
