@@ -19,6 +19,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   });
 
   @override
+  Future<Either<Failure, User?>> logOut() {
+    return _logOut();
+  }
+
+  @override
   Future<Either<Failure, User?>> getUserLocalData() {
     return _getUserLocalData();
   }
@@ -29,30 +34,30 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String password,
     required String fullName,
   }) async {
-    return await _login(
+    return await _logIn(
       username: username,
       password: password,
     );
   }
 
   @override
-  Future<Either<Failure, User>> login({
+  Future<Either<Failure, User>> logIn({
     required String username,
     required String password,
   }) async {
-    return await _login(
+    return await _logIn(
       username: username,
       password: password,
     );
   }
 
-  Future<Either<Failure, User>> _login({
+  Future<Either<Failure, User>> _logIn({
     required String username,
     required String password,
   }) async {
     if (networkInfo.isConnected) {
       try {
-        final remoteDataResponse = await remoteData.login(
+        final remoteDataResponse = await remoteData.logIn(
           username: username,
           password: password,
         );
@@ -73,5 +78,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Failure, User?>> _getUserLocalData() async {
     final localDataResponse = localData.getUserModel();
     return Right(localDataResponse);
+  }
+
+  Future<Either<Failure, User?>> _logOut() async {
+    localData.clearUserModel();
+    return Right(null);
   }
 }

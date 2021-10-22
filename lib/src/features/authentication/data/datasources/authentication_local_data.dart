@@ -11,7 +11,6 @@ class AuthenticationLocalData {
   }
 
   User? getUserModel() {
-    print(_getStorage.read(storageKeyUser));
     return _getStorage.read(storageKeyUser) == null
         ? null
         : User.fromMap(
@@ -24,11 +23,14 @@ class AuthenticationLocalData {
   }
 
   void saveUserModel(User userModel) async {
-    print(userModel.toString());
     _getStorage.write(storageKeyUser, userModel.toMap());
   }
 
   void clearAccessToken() async {
     _getStorage.remove(storageKeyToken);
+  }
+
+  void clearUserModel() async {
+    _getStorage.remove(storageKeyUser);
   }
 }

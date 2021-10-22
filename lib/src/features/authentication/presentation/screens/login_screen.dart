@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tdd_architecture/src/common/app_decoration.dart';
 import 'package:flutter_tdd_architecture/src/common/color.dart';
+import 'package:flutter_tdd_architecture/src/common/constants.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               10.w,
                               12.sp,
                             ),
-                            child: Container(),
+                            child: Constants().splashLottie,
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(

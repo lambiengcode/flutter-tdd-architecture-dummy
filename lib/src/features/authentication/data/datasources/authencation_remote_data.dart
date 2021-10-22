@@ -1,7 +1,7 @@
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 
 class AuthenticationRemoteData {
-  Future<User?> login({
+  Future<User?> logIn({
     required String username,
     required String password,
   }) async {

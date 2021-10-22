@@ -3,7 +3,7 @@ import 'package:flutter_tdd_architecture/src/core/error/failures.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/entities/user.dart';
 
 abstract class AuthenticationRepository {
-  Future<Either<Failure, User>> login({
+  Future<Either<Failure, User>> logIn({
     required String username,
     required String password,
   });
@@ -13,4 +13,5 @@ abstract class AuthenticationRepository {
     required String fullName,
   });
   Future<Either<Failure, User?>> getUserLocalData();
+  Future<Either<Failure, User?>> logOut();
 }
