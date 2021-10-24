@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_tdd_architecture/src/core/network/network.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/data/datasources/authencation_remote_data.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/data/datasources/authentication_local_data.dart';
@@ -43,5 +44,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<AuthenticationRemoteData>(() => AuthenticationRemoteData());
 
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+
+  // Register Network
+  sl.registerLazySingleton<Connectivity>(() => Connectivity());
 }

@@ -55,7 +55,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String username,
     required String password,
   }) async {
-    if (networkInfo.isConnected) {
+    if (await networkInfo.isConnected()) {
       try {
         final remoteDataResponse = await remoteData.logIn(
           username: username,

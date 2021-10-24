@@ -185,9 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
         cursorColor: Theme.of(context).primaryColor,
         focusNode: focusNode,
         onFieldSubmitted: (val) {
-          if (title == 'Email') {
-            usernameFocus.unfocus();
-            passwordFocus.requestFocus();
+          if (title == 'Email') { 
+            usernameFocus.unfocus();                      
+            passwordFocus.requestFocus();  
           } else {}
         },
         cursorRadius: Radius.circular(30.0),
