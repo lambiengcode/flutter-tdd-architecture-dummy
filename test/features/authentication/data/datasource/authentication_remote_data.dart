@@ -1,66 +1,117 @@
-import 'package:flutter_tdd_architecture/src/features/authentication/data/datasources/authentication_local_data.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter_tdd_architecture/src/common/api_gateway.dart';
+import 'package:flutter_tdd_architecture/src/common/constants.dart';
+import 'package:flutter_tdd_architecture/src/features/authentication/data/datasources/authencation_remote_data.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:matcher/matcher.dart';
+import 'package:dio/dio.dart';
 
-class MockSharedPreferences extends Mock implements GetStorage {}
+class MockDio extends Mock implements Dio {}
 
 void main() {
-  AuthenticationLocalData? dataSource;
-  MockSharedPreferences? mockSharedPreferences;
+  AuthenticationRemoteData? remoteData;
+  MockDio? mockDioClient;
 
   setUp(() {
-    mockSharedPreferences = MockSharedPreferences();
-    dataSource = AuthenticationLocalData();
+    mockDioClient = MockDio();
+    remoteData = AuthenticationRemoteData();
   });
 
-  // group('getLastNumberTrivia', () {
-  //   final tNumberTriviaModel =
-  //       UserModel.fromJson(json.decode());
+  void setUpMockDioClientSuccess200(String path) {
+    when(mockDioClient!.post(path)).thenAnswer(
+      (_) async => Response(
+        statusCode: 200,
+        requestOptions: RequestOptions(
+          baseUrl: Constants.baseUrl,
+          path: '',
+          connectTimeout: 10000,
+          receiveTimeout: 10000,
+        ),
+      ),
+    );
+  }
 
-  //   test(
-  //     'should return NumberTrivia from SharedPreferences when there is one in the cache',
-  //     () async {
-  //       // arrange
-  //       when(mockSharedPreferences.getString(any))
-  //           .thenReturn(fixture('trivia_cached.json'));
-  //       // act
-  //       final result = await dataSource.getLastNumberTrivia();
-  //       // assert
-  //       verify(mockSharedPreferences.getString(CACHED_NUMBER_TRIVIA));
-  //       expect(result, equals(tNumberTriviaModel));
-  //     },
-  //   );
+  void setUpMockDioClientFailure400(String path) {
+    when(mockDioClient!.post(path)).thenAnswer(
+      (_) async => Response(
+        statusCode: 400,
+        requestOptions: RequestOptions(
+          baseUrl: Constants.baseUrl,
+          path: path,
+          connectTimeout: 10000,
+          receiveTimeout: 10000,
+        ),
+      ),
+    );
+  }
 
-  //   test(
-  //     'should throw a CacheExeption when there is not a cached value',
-  //     () async {
-  //       // arrange
-  //       when(mockSharedPreferences.getString(any)).thenReturn(null);
-  //       // act
-  //       final call = dataSource.getLastNumberTrivia;
-  //       // assert
-  //       expect(() => call(), throwsA(TypeMatcher<CacheException>()));
-  //     },
-  //   );
-  // });
+  group('LOGIN - API', () {
+    test(
+      'should return login when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockDioClientSuccess200(ApiGateway.LOGIN);
 
-  // group('cacheNumberTrivia', () {
-  //   final tNumberTriviaModel =
-  //       NumberTriviaModel(number: 1, text: 'test trivia');
+        // act
+        final result = await remoteData!.logIn(
+          username: 'lambiengcode@gmail.com',
+          password: '123123',
+        );
+        // assert
+        expect(result, isNotNull);
+      },
+    );
 
-  //   test(
-  //     'should call SharedPreferences to cache the data',
-  //     () async {
-  //       // act
-  //       dataSource.cacheNumberTrivia(tNumberTriviaModel);
-  //       // assert
-  //       final expectedJsonString = json.encode(tNumberTriviaModel.toJson());
-  //       verify(mockSharedPreferences.setString(
-  //         CACHED_NUMBER_TRIVIA,
-  //         expectedJsonString,
-  //       ));
-  //     },
-  //   );
-  // });
+    test(
+      'should return login when the response code is 400 (failure)',
+      () async {
+        // arrange
+        setUpMockDioClientFailure400(ApiGateway.LOGIN);
+
+        // act
+        final result = await remoteData!.logIn(
+          username: 'lambiengcode@gmail.com',
+          password: '123456',
+        );
+        // assert
+        expect(result, null);
+      },
+    );
+  });
+
+  group('REGISTER - API', () {
+    test(
+      'should return register when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockDioClientSuccess200(ApiGateway.REGISTER);
+
+        // act
+        final result = await remoteData!.register(
+          fullName: 'Dao Hong Vinh',
+          username: 'lambiengcode@gmail.com',
+          password: '123123',
+        );
+        // assert
+        expect(result, isNotNull);
+      },
+    );
+
+    test(
+      'should return login when the response code is 400 (failure)',
+      () async {
+        // arrange
+        setUpMockDioClientFailure400(ApiGateway.REGISTER);
+
+        // act
+        final result = await remoteData!.register(
+          fullName: 'Dao Hong Vinh',
+          username: 'lambiengcode@gmail.com',
+          password: '123456',
+        );
+        // assert
+        expect(result, null);
+      },
+    );
+  });
 }

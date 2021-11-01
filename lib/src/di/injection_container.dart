@@ -10,10 +10,12 @@ import 'package:flutter_tdd_architecture/src/features/authentication/domain/usec
 import 'package:flutter_tdd_architecture/src/features/authentication/domain/usecases/register.dart';
 import 'package:flutter_tdd_architecture/src/features/authentication/presentation/bloc/auth/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  await GetStorage.init();
   // Register Bloc
   sl.registerFactory(
     () => AuthBloc(
@@ -40,7 +42,7 @@ Future<void> init() async {
   );
 
   // Data Source
-  sl.registerLazySingleton<AuthenticationLocalData>(() => AuthenticationLocalData());
+  sl.registerLazySingleton<AuthenticationLocalData>(() => AuthenticationLocalData(getStorage: GetStorage()));
 
   sl.registerLazySingleton<AuthenticationRemoteData>(() => AuthenticationRemoteData());
 
