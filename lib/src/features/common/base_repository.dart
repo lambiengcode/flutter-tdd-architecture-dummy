@@ -91,7 +91,7 @@ class BaseRepository {
 
   Future<diox.Response<dynamic>> getRoute(
     String gateway, {
-    String? params,
+    String? params, 
     String? query,
   }) async {
     printEndpoint('GET', gateway);
